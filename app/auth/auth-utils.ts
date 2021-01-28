@@ -1,8 +1,8 @@
 import { SecurePassword, AuthenticationError } from "blitz"
 import db from "db"
 
-export const authenticateUser = async (email: string, password: string) => {
-  const user = await db.user.findFirst({ where: { email } })
+export const authenticateUser = async (username: string, password: string) => {
+  const user = await db.user.findFirst({ where: { username } })
   if (!user) throw new AuthenticationError()
 
   const result = await SecurePassword.verify(user.hashedPassword, password)

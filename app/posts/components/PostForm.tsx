@@ -1,22 +1,41 @@
+import Form from "app/components/Form"
+import LabeledTextField from "app/components/LabeledTextField"
+import getTopic from "app/topics/queries/getTopic"
+import { useMutation, useQuery } from "blitz"
 import React from "react"
+import createPost from "../mutations/createPost"
 
 type PostFormProps = {
   initialValues: any
+  topicId: number
   onSubmit: React.FormEventHandler<HTMLFormElement>
 }
 
-const PostForm = ({ initialValues, onSubmit }: PostFormProps) => {
+const PostForm = ({ initialValues, topicId, onSubmit }: PostFormProps) => {
+  const [createPostMutation] = useMutation(createPost)
+  const [_, { refetch }] = useQuery(getTopic, { where: { id: topicId } })
+
   return (
-    <form
-      onSubmit={(event) => {
-        event.preventDefault()
-        onSubmit(event)
+    <Form
+      submitText="Create Post"
+      onSubmit={async (values) => {
+        try {
+          const post = await createPostMutation({
+            data: {
+              ...values,
+              topic: {
+                connect: { id: topicId },
+              },
+            },
+          })
+          await refetch({ force: true })
+        } catch (error) {
+          alert("Error creating post " + JSON.stringify(error, null, 2))
+        }
       }}
     >
-      <div>Put your form fields here. But for now, just click submit</div>
-      <div>{JSON.stringify(initialValues)}</div>
-      <button>Submit</button>
-    </form>
+      <LabeledTextField name="body" as="textarea" />
+    </Form>
   )
 }
 

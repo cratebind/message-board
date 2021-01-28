@@ -3,13 +3,18 @@ import Layout from "app/layouts/Layout"
 import { Link, useRouter, useQuery, useParam, BlitzPage, useMutation } from "blitz"
 import getTopic from "app/topics/queries/getTopic"
 import deleteTopic from "app/topics/mutations/deleteTopic"
-import { Heading, Text } from "minerva-ui"
+import { Box, Button, Heading, Stack, Text } from "minerva-ui"
+import PostForm from "app/posts/components/PostForm"
+import { useCurrentUser } from "app/hooks/useCurrentUser"
 
 export const Topic = () => {
+  const currentUser = useCurrentUser()
   const router = useRouter()
   const topicId = useParam("topicId", "number")
   const [topic] = useQuery(getTopic, { where: { id: topicId } })
   const [deleteTopicMutation] = useMutation(deleteTopic)
+
+  console.log({ topic })
 
   return (
     <div>
@@ -18,21 +23,44 @@ export const Topic = () => {
       </Heading>
       <Text>{topic.body}</Text>
 
-      <Link href={`/topics/${topic.id}/edit`}>
-        <a>Edit</a>
-      </Link>
+      {currentUser?.id === topic.userId && (
+        <Stack horizontal mt={8}>
+          <Link href={`/topics/${topic.id}/edit`}>
+            <a>
+              <Button>Edit</Button>
+            </a>
+          </Link>
 
-      <button
-        type="button"
-        onClick={async () => {
-          if (window.confirm("This will be deleted")) {
-            await deleteTopicMutation({ where: { id: topic.id } })
-            router.push("/topics")
-          }
-        }}
-      >
-        Delete
-      </button>
+          <Button
+            type="button"
+            onClick={async () => {
+              if (window.confirm("This will be deleted")) {
+                await deleteTopicMutation({ where: { id: topic.id } })
+                router.push("/topics")
+              }
+            }}
+          >
+            Delete
+          </Button>
+        </Stack>
+      )}
+
+      <Stack gap="10px">
+        {topic.posts.map((post) => (
+          <Box key={post.id} paddingTop={6} marginTop={6} borderTopWidth="1px">
+            <Text>{post.user.username}</Text>
+            <Text>{post.body}</Text>
+          </Box>
+        ))}
+      </Stack>
+
+      <Box borderTopWidth="1px" marginTop={8} pt={8}>
+        <PostForm
+          initialValues={{}}
+          topicId={topic.id}
+          onSubmit={(values) => console.log(values)}
+        />
+      </Box>
     </div>
   )
 }
@@ -42,7 +70,9 @@ const ShowTopicPage: BlitzPage = () => {
     <div>
       <p>
         <Link href="/topics">
-          <a>Back</a>
+          <a>
+            <Button>Back</Button>
+          </a>
         </Link>
       </p>
 

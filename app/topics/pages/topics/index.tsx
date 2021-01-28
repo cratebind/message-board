@@ -43,7 +43,7 @@ export const TopicsList = () => {
               </Link>
 
               <Text color="gray.400" fontSize="xs">
-                {topic.user?.email}
+                {topic.user?.username}
               </Text>
             </Flex>
           </Box>

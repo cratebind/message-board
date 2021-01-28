@@ -40,15 +40,21 @@ export function Form<S extends z.ZodType<any, any>>({
           return error.formErrors.fieldErrors
         }
       }}
-      onSubmit={async (values, { setErrors }) => {
+      onSubmit={async (values, { setErrors, resetForm }) => {
         const { FORM_ERROR, ...otherErrors } = (await onSubmit(values)) || {}
 
         if (FORM_ERROR) {
           setFormError(FORM_ERROR)
         }
 
-        if (Object.keys(otherErrors).length > 0) {
+        const hasOtherErrors = Object.keys(otherErrors).length > 0
+
+        if (hasOtherErrors) {
           setErrors(otherErrors)
+        }
+
+        if (!FORM_ERROR && !hasOtherErrors) {
+          resetForm(initialValues)
         }
       }}
     >

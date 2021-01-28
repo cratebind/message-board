@@ -13,6 +13,7 @@ type TopicFormProps = {
 export type TopicFormValues = {
   title: string
   body: string
+  topicId: string
 }
 
 const TopicForm = ({ initialValues, onSuccess }: TopicFormProps) => {

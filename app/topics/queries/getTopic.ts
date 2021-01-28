@@ -4,9 +4,7 @@ import db, { Prisma } from "db"
 type GetTopicInput = Pick<Prisma.FindFirstTopicArgs, "where">
 
 export default async function getTopic({ where }: GetTopicInput, ctx: Ctx) {
-  ctx.session.authorize()
-
-  const topic = await db.topic.findFirst({ where })
+  const topic = await db.topic.findFirst({ where, include: { posts: { include: { user: true } } } })
 
   if (!topic) throw new NotFoundError()
 
