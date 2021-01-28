@@ -1,8 +1,7 @@
 import Layout from "app/layouts/Layout"
-import { Link, useRouter, useMutation, BlitzPage } from "blitz"
+import { useRouter, useMutation, BlitzPage } from "blitz"
 import createTopic from "app/topics/mutations/createTopic"
 import TopicForm, { TopicFormValues } from "app/topics/components/TopicForm"
-import { Prisma } from "@prisma/client"
 
 const NewTopicPage: BlitzPage = () => {
   const router = useRouter()
@@ -16,6 +15,10 @@ const NewTopicPage: BlitzPage = () => {
         initialValues={{
           title: "",
           body: "",
+        }}
+        onSubmit={async (values: TopicFormValues) => {
+          const topic = await createTopicMutation({ data: values })
+          router.push(`/topics/${topic.id}`)
         }}
       />
     </div>

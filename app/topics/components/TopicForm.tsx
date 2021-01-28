@@ -1,13 +1,13 @@
 import { TopicCreateInput } from "@prisma/client"
 import Form from "app/components/Form"
 import LabeledTextField from "app/components/LabeledTextField"
-import { useMutation, useRouter } from "blitz"
 import React from "react"
-import createTopic from "../mutations/createTopic"
 
 type TopicFormProps = {
   initialValues: any
-  onSuccess?: () => void
+  onSubmit: (values: any) => void
+  onSuccess?: (values: any) => void
+  submitText?: string
 }
 
 export type TopicFormValues = {
@@ -16,19 +16,17 @@ export type TopicFormValues = {
   topicId: string
 }
 
-const TopicForm = ({ initialValues, onSuccess, ...props }: TopicFormProps) => {
-  const router = useRouter()
-  const [createTopicMutation] = useMutation(createTopic)
+const TopicForm = ({ initialValues = {}, onSubmit, onSuccess, ...props }: TopicFormProps) => {
   return (
     <Form
       submitText="Create Topic"
-      onSubmit={onSubmit}
-      onSubmit={async (values: TopicFormValues) => {
+      initialValues={initialValues}
+      onSubmit={async (values) => {
         try {
-          const topic = await createTopicMutation({ data: values })
-          router.push(`/topics/${topic.id}`)
+          const topic = await onSubmit(values)
+          onSuccess?.(topic)
         } catch (error) {
-          alert("Error creating topic " + JSON.stringify(error, null, 2))
+          throw new Error(error)
         }
       }}
       {...props}

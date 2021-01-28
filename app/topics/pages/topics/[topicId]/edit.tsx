@@ -1,35 +1,54 @@
 import { Suspense } from "react"
 import Layout from "app/layouts/Layout"
-import { Link, useRouter, useQuery, useMutation, useParam, BlitzPage } from "blitz"
+import {
+  Link,
+  useRouter,
+  useQuery,
+  useMutation,
+  useParam,
+  BlitzPage,
+  AuthorizationError,
+} from "blitz"
 import getTopic from "app/topics/queries/getTopic"
 import updateTopic from "app/topics/mutations/updateTopic"
 import TopicForm from "app/topics/components/TopicForm"
+import { useCurrentUser } from "app/hooks/useCurrentUser"
 
 export const EditTopic = () => {
   const router = useRouter()
+  const currentUser = useCurrentUser()
   const topicId = useParam("topicId", "number")
   const [topic, { setQueryData }] = useQuery(getTopic, { where: { id: topicId } })
   const [updateTopicMutation] = useMutation(updateTopic)
 
+  if (!topic) return null
+
+  console.log({ topic })
+
+  if (Boolean(currentUser) && Boolean(topic) && currentUser?.id !== topic.userId) {
+    throw new AuthorizationError()
+  }
+
   return (
     <div>
-      <h1>Edit Topic {topic.id}</h1>
-      <pre>{JSON.stringify(topic)}</pre>
+      <h1>Edit Topic</h1>
 
       <TopicForm
         initialValues={topic}
-        onSubmit={async () => {
+        submitText="Update Topic"
+        onSubmit={async ({ title, body }) => {
           try {
             const updated = await updateTopicMutation({
               where: { id: topic.id },
-              data: { name: "MyNewName" },
+              data: {
+                title,
+                body,
+              },
             })
             await setQueryData(updated)
-            alert("Success!" + JSON.stringify(updated))
             router.push(`/topics/${updated.id}`)
           } catch (error) {
-            console.log(error)
-            alert("Error editing topic " + JSON.stringify(error, null, 2))
+            throw new Error(error)
           }
         }}
       />
