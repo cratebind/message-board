@@ -1,6 +1,7 @@
 import React, { useState, ReactNode, PropsWithoutRef } from "react"
 import { Formik, FormikProps } from "formik"
 import * as z from "zod"
+import { Button } from "minerva-ui"
 
 type FormProps<S extends z.ZodType<any, any>> = {
   /** All your form fields */
@@ -62,9 +63,9 @@ export function Form<S extends z.ZodType<any, any>>({
             </div>
           )}
 
-          <button type="submit" disabled={isSubmitting}>
+          <Button type="submit" disabled={isSubmitting}>
             {submitText}
-          </button>
+          </Button>
 
           <style global jsx>{`
             .form > * + * {

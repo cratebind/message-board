@@ -1,7 +1,11 @@
 import { AppProps, ErrorComponent, useRouter, AuthenticationError, AuthorizationError } from "blitz"
 import { ErrorBoundary, FallbackProps } from "react-error-boundary"
+import { ThemeProvider, GlobalStyles, Flex, Box } from "minerva-ui"
+
 import { queryCache } from "react-query"
 import LoginForm from "app/auth/components/LoginForm"
+import { UserInfo } from "."
+import { Suspense } from "react"
 
 export default function App({ Component, pageProps }: AppProps) {
   const getLayout = Component.getLayout || ((page) => page)
@@ -17,7 +21,17 @@ export default function App({ Component, pageProps }: AppProps) {
         queryCache.resetErrorBoundaries()
       }}
     >
-      {getLayout(<Component {...pageProps} />)}
+      <ThemeProvider>
+        <GlobalStyles />
+        <Suspense fallback="Loading...">
+          <UserInfo />
+        </Suspense>
+        <Flex justifyContent="center">
+          <Box maxWidth="1080px" width="100%" px={3}>
+            {getLayout(<Component {...pageProps} />)}
+          </Box>
+        </Flex>
+      </ThemeProvider>
     </ErrorBoundary>
   )
 }

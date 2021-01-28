@@ -1,40 +1,39 @@
-import React, { PropsWithoutRef } from "react";
-import { useField, useFormikContext, ErrorMessage } from "formik";
+import React, { PropsWithoutRef } from "react"
+import { useField, useFormikContext, ErrorMessage } from "formik"
+import { Input } from "minerva-ui"
 
-export interface LabeledTextFieldProps
-  extends PropsWithoutRef<JSX.IntrinsicElements["input"]> {
+export interface LabeledTextFieldProps extends PropsWithoutRef<JSX.IntrinsicElements["input"]> {
   /** Field name. */
-  name: string;
+  name: string
   /** Field label. */
-  label: string;
+  label?: string
   /** Field type. Doesn't include radio buttons and checkboxes */
-  type?: "text" | "password" | "email" | "number";
-  outerProps?: PropsWithoutRef<JSX.IntrinsicElements["div"]>;
+  type?: "text" | "password" | "email" | "number"
+  outerProps?: PropsWithoutRef<JSX.IntrinsicElements["div"]>
+  as?: any
 }
 
-export const LabeledTextField = React.forwardRef<
-  HTMLInputElement,
-  LabeledTextFieldProps
->(({ name, label, outerProps, ...props }, ref) => {
-  const [input] = useField(name);
-  const { isSubmitting } = useFormikContext();
+export const LabeledTextField = React.forwardRef<HTMLInputElement, LabeledTextFieldProps>(
+  ({ name, label, outerProps, ...props }, ref) => {
+    const [input] = useField(name)
+    const { isSubmitting } = useFormikContext()
 
-  return (
-    <div {...outerProps}>
-      <label>
-        {label}
-        <input {...input} disabled={isSubmitting} {...props} ref={ref} />
-      </label>
+    return (
+      <div {...outerProps}>
+        <label>
+          {label}
+          <Input {...input} disabled={isSubmitting} {...props} ref={ref} />
+        </label>
 
-      <ErrorMessage name={name}>
-        {(msg) => (
-          <div role="alert" style={{ color: "red" }}>
-            {msg}
-          </div>
-        )}
-      </ErrorMessage>
+        <ErrorMessage name={name}>
+          {(msg) => (
+            <div role="alert" style={{ color: "red" }}>
+              {msg}
+            </div>
+          )}
+        </ErrorMessage>
 
-      <style jsx>{`
+        {/* <style jsx>{`
         label {
           display: flex;
           flex-direction: column;
@@ -49,9 +48,10 @@ export const LabeledTextField = React.forwardRef<
           appearance: none;
           margin-top: 0.5rem;
         }
-      `}</style>
-    </div>
-  );
-});
+      `}</style> */}
+      </div>
+    )
+  }
+)
 
-export default LabeledTextField;
+export default LabeledTextField
