@@ -16,6 +16,7 @@ export default async function getTopics(
     skip,
     include: {
       user: true,
+      posts: true,
     },
   })
 

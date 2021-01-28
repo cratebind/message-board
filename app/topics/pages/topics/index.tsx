@@ -2,7 +2,7 @@ import { Suspense } from "react"
 import Layout from "app/layouts/Layout"
 import { Link, usePaginatedQuery, useRouter, BlitzPage } from "blitz"
 import getTopics from "app/topics/queries/getTopics"
-import { Box, Button, Heading, Text } from "minerva-ui"
+import { Box, Button, Flex, Heading, Stack, Text } from "minerva-ui"
 
 const ITEMS_PER_PAGE = 100
 
@@ -33,19 +33,31 @@ export const TopicsList = () => {
             <Text fontWeight={400} color="gray.600" fontSize="base" lineHeight={1}>
               {topic.body}
             </Text>
-            <Text color="gray.400" fontSize="xs" mt={2}>
-              {topic.user?.email}
-            </Text>
+            <Flex justifyContent="space-between" mt={2} alignItems="flex-end">
+              <Link href={`/topics/${topic.id}`}>
+                <a>
+                  <Text color="gray.500" fontSize="base">
+                    {topic.posts.length} Comments
+                  </Text>
+                </a>
+              </Link>
+
+              <Text color="gray.400" fontSize="xs">
+                {topic.user?.email}
+              </Text>
+            </Flex>
           </Box>
         ))}
       </div>
 
-      <Button disabled={page === 0} onClick={goToPreviousPage}>
-        Previous
-      </Button>
-      <Button disabled={!hasMore} onClick={goToNextPage}>
-        Next
-      </Button>
+      <Stack horizontal>
+        <Button disabled={page === 0} onClick={goToPreviousPage}>
+          Previous
+        </Button>
+        <Button disabled={!hasMore} onClick={goToNextPage}>
+          Next
+        </Button>
+      </Stack>
     </div>
   )
 }
