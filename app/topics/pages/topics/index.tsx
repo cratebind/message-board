@@ -10,7 +10,7 @@ export const TopicsList = () => {
   const router = useRouter()
   const page = Number(router.query.page) || 0
   const [{ topics, hasMore }] = usePaginatedQuery(getTopics, {
-    orderBy: { id: "asc" },
+    orderBy: { updatedAt: "desc" },
     skip: ITEMS_PER_PAGE * page,
     take: ITEMS_PER_PAGE,
   })
@@ -22,16 +22,20 @@ export const TopicsList = () => {
     <div>
       <div>
         {topics.map((topic) => (
-          <Box key={topic.id} py={4}>
+          <Box key={topic.id} mb={6}>
             <Link href={`/topics/${topic.id}`}>
               <a>
-                <Heading as="h3" fontSize="xl">
+                <Heading as="h2" color="gray.900" fontSize="lg" fontWeight="500" mb={2}>
                   {topic.title}
                 </Heading>
               </a>
             </Link>
-            <Text color="gray.600">{topic.body}</Text>
-            <Text mt={2}>{topic.user?.email}</Text>
+            <Text fontWeight={400} color="gray.600" fontSize="base" lineHeight={1}>
+              {topic.body}
+            </Text>
+            <Text color="gray.400" fontSize="xs" mt={2}>
+              {topic.user?.email}
+            </Text>
           </Box>
         ))}
       </div>

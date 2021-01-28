@@ -23,7 +23,7 @@ export const UserInfo = () => {
       p={3}
       alignItems="center"
       borderBottomWidth="1px"
-      mb={2}
+      mb={4}
     >
       {Boolean(currentUser) ? (
         <>

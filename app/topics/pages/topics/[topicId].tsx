@@ -13,7 +13,7 @@ export const Topic = () => {
 
   return (
     <div>
-      <Heading as="h3" fontSize="xl">
+      <Heading as="h1" fontSize="3xl" mb={2}>
         {topic.title}
       </Heading>
       <Text>{topic.body}</Text>
