@@ -65,12 +65,6 @@ export const TopicsList = () => {
 const TopicsPage: BlitzPage = () => {
   return (
     <div>
-      <p>
-        <Link href="/topics/new">
-          <a>Create Topic</a>
-        </Link>
-      </p>
-
       <Suspense fallback={<div>Loading...</div>}>
         <TopicsList />
       </Suspense>

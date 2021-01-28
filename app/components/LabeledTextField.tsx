@@ -18,8 +18,6 @@ export const LabeledTextField = React.forwardRef<HTMLInputElement, LabeledTextFi
     const [input] = useField(name)
     const { isSubmitting } = useFormikContext()
 
-    console.log({ input, props })
-
     return (
       <div {...outerProps}>
         <label>

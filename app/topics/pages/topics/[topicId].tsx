@@ -14,8 +14,6 @@ export const Topic = () => {
   const [topic] = useQuery(getTopic, { where: { id: topicId } })
   const [deleteTopicMutation] = useMutation(deleteTopic)
 
-  console.log({ topic })
-
   return (
     <div>
       <Heading as="h1" fontSize="3xl" mb={2}>
@@ -58,7 +56,7 @@ export const Topic = () => {
         <PostForm
           initialValues={{}}
           topicId={topic.id}
-          onSubmit={(values) => console.log(values)}
+          // onSubmit={(values) => console.log(values)}
         />
       </Box>
     </div>

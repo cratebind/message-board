@@ -16,12 +16,13 @@ export type TopicFormValues = {
   topicId: string
 }
 
-const TopicForm = ({ initialValues, onSuccess }: TopicFormProps) => {
+const TopicForm = ({ initialValues, onSuccess, ...props }: TopicFormProps) => {
   const router = useRouter()
   const [createTopicMutation] = useMutation(createTopic)
   return (
     <Form
       submitText="Create Topic"
+      onSubmit={onSubmit}
       onSubmit={async (values: TopicFormValues) => {
         try {
           const topic = await createTopicMutation({ data: values })
@@ -30,6 +31,7 @@ const TopicForm = ({ initialValues, onSuccess }: TopicFormProps) => {
           alert("Error creating topic " + JSON.stringify(error, null, 2))
         }
       }}
+      {...props}
     >
       <LabeledTextField name="title" label="Title" />
       <LabeledTextField name="body" label="Body" as="textarea" />
