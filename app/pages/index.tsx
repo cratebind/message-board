@@ -2,8 +2,22 @@ import { Link, useMutation, InferGetServerSidePropsType } from 'blitz';
 import Layout from 'app/layouts/Layout';
 import logout from 'app/auth/mutations/logout';
 import { useCurrentUser } from 'app/hooks/useCurrentUser';
-import { Suspense } from 'react';
-import { Button, Heading, Stack } from 'minerva-ui';
+import React, { Suspense } from 'react';
+import {
+  Button,
+  Heading,
+  MenuButton,
+  MenuContainer,
+  Stack,
+  Text,
+  Image,
+  MenuList,
+  MenuItem,
+  MenuLink,
+  MenuDivider,
+  Icon,
+  Box,
+} from 'minerva-ui';
 import { ITEMS_PER_PAGE, TopicsList } from 'app/topics/pages/topics';
 import getTopics from 'app/topics/queries/getTopics';
 import { Post, Topic, User } from '@prisma/client';
@@ -41,22 +55,26 @@ export const UserInfo = () => {
   return (
     <Stack horizontal>
       {Boolean(currentUser) ? (
-        <>
-          <Link href="/topics/new">
-            <Button as="a" variant="primary">
-              Create Topic
-            </Button>
-          </Link>
-          <Button
-            variant="primary"
-            className="button small"
-            onClick={async () => {
-              await logoutMutation();
-            }}
-          >
-            Logout
-          </Button>
-        </>
+        <MenuContainer>
+          <MenuButton p={2} variant="primary">
+            <Text color="white">{currentUser?.username}</Text>
+            <Box ml={2} color="white">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="presentation" className="sc-bdfBwQ ggQcPc"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </Box>
+          </MenuButton>
+          <MenuList menuPosition="right">
+            <Link href="/topics/new">
+              <MenuLink>Create Topic</MenuLink>
+            </Link>
+            <MenuItem
+              onSelect={async () => {
+                await logoutMutation();
+              }}
+            >
+              Log Out
+            </MenuItem>
+          </MenuList>
+        </MenuContainer>
       ) : (
         <>
           <Link href="/signup">
