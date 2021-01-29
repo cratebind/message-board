@@ -6,7 +6,7 @@ import getCurrentUser from "app/users/queries/getCurrentUser"
 
 const SignupPage: BlitzPage = () => {
   const router = useRouter()
-  const [user, { refetch }] = useQuery(getCurrentUser, null)
+  const [user, { refetch }] = useQuery(getCurrentUser, null, { suspense: false })
 
   return (
     <div>
