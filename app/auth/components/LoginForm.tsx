@@ -4,7 +4,7 @@ import { LabeledTextField } from 'app/components/LabeledTextField';
 import { Form, FORM_ERROR } from 'app/components/Form';
 import login from 'app/auth/mutations/login';
 import { LoginInput } from 'app/auth/validations';
-import { Box, Flex } from 'minerva-ui';
+import { Box, Flex, Heading, Text } from 'minerva-ui';
 
 type LoginFormProps = {
   onSuccess?: () => void;
@@ -23,6 +23,12 @@ export const LoginForm = (props: LoginFormProps) => {
 
   return (
     <AuthWrapper>
+      <Box textAlign="center" pb={4}>
+        <Heading as="h2" fontSize="2xl" py={2}>
+          Cratebind Message Board
+        </Heading>
+        <Text>Log in to your account</Text>
+      </Box>
       <Form
         submitText="Login"
         schema={LoginInput}
@@ -52,7 +58,13 @@ export const LoginForm = (props: LoginFormProps) => {
         />
       </Form>
 
-      <div style={{ marginTop: '1rem', textDecoration: 'underline' }}>
+      <div
+        style={{
+          marginTop: '2rem',
+          textDecoration: 'underline',
+          textAlign: 'center',
+        }}
+      >
         <Link href="/signup">Sign Up</Link>
       </div>
     </AuthWrapper>

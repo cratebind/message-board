@@ -18,6 +18,7 @@ export const NavBar = () => {
       alignItems="center"
       borderBottomWidth="1px"
       mb={4}
+      height="60px"
     >
       <Link href="/">
         <a>
@@ -42,9 +43,12 @@ export const UserInfo = () => {
       {Boolean(currentUser) ? (
         <>
           <Link href="/topics/new">
-            <Button as="a">Create Topic</Button>
+            <Button as="a" variant="primary">
+              Create Topic
+            </Button>
           </Link>
           <Button
+            variant="primary"
             className="button small"
             onClick={async () => {
               await logoutMutation();
@@ -56,10 +60,14 @@ export const UserInfo = () => {
       ) : (
         <>
           <Link href="/signup">
-            <a>Sign Up</a>
+            <Button as="a" variant="primary">
+              Sign Up
+            </Button>
           </Link>
           <Link href="/login">
-            <a>Login</a>
+            <Button as="a" variant="primary">
+              Login
+            </Button>
           </Link>
         </>
       )}
