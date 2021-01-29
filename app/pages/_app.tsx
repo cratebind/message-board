@@ -10,8 +10,7 @@ import { ThemeProvider, GlobalStyles, Flex, Box } from 'minerva-ui';
 
 import { queryCache } from 'react-query';
 import LoginForm from 'app/auth/components/LoginForm';
-import { UserInfo } from '.';
-import { Suspense } from 'react';
+import { NavBar } from '.';
 
 export default function App({ Component, pageProps }: AppProps) {
   const getLayout = Component.getLayout || ((page) => page);
@@ -29,9 +28,7 @@ export default function App({ Component, pageProps }: AppProps) {
     >
       <ThemeProvider>
         <GlobalStyles />
-        <Suspense fallback="Loading...">
-          <UserInfo />
-        </Suspense>
+        <NavBar />
         <Flex justifyContent="center">
           <Box maxWidth="1080px" width="100%" px={3}>
             {getLayout(<Component {...pageProps} />)}

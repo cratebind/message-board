@@ -8,15 +8,7 @@ import { ITEMS_PER_PAGE, TopicsList } from 'app/topics/pages/topics';
 import getTopics from 'app/topics/queries/getTopics';
 import { Post, Topic, User } from '@prisma/client';
 
-/*
- * This file is just for a pleasant getting started page for your new app.
- * You can delete everything in here and start from scratch if you like.
- */
-
-export const UserInfo = () => {
-  const currentUser = useCurrentUser();
-  const [logoutMutation] = useMutation(logout);
-
+export const NavBar = () => {
   return (
     <Stack
       horizontal
@@ -34,33 +26,43 @@ export const UserInfo = () => {
           </Heading>
         </a>
       </Link>
+      <Suspense fallback="">
+        <UserInfo />
+      </Suspense>
+    </Stack>
+  );
+};
 
-      <Stack horizontal>
-        {Boolean(currentUser) ? (
-          <>
-            <Link href="/topics/new">
-              <Button as="a">Create Topic</Button>
-            </Link>
-            <Button
-              className="button small"
-              onClick={async () => {
-                await logoutMutation();
-              }}
-            >
-              Logout
-            </Button>
-          </>
-        ) : (
-          <>
-            <Link href="/signup">
-              <a>Sign Up</a>
-            </Link>
-            <Link href="/login">
-              <a>Login</a>
-            </Link>
-          </>
-        )}
-      </Stack>
+export const UserInfo = () => {
+  const currentUser = useCurrentUser();
+  const [logoutMutation] = useMutation(logout);
+
+  return (
+    <Stack horizontal>
+      {Boolean(currentUser) ? (
+        <>
+          <Link href="/topics/new">
+            <Button as="a">Create Topic</Button>
+          </Link>
+          <Button
+            className="button small"
+            onClick={async () => {
+              await logoutMutation();
+            }}
+          >
+            Logout
+          </Button>
+        </>
+      ) : (
+        <>
+          <Link href="/signup">
+            <a>Sign Up</a>
+          </Link>
+          <Link href="/login">
+            <a>Login</a>
+          </Link>
+        </>
+      )}
     </Stack>
   );
 };
