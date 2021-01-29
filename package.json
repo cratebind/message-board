@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "start": "blitz start",
+    "start:production": "blitz start --production --port $PORT",
+    "heroku-postbuild": "blitz prisma migrate deploy --preview-feature && blitz build",
     "studio": "blitz prisma studio",
     "build": "blitz build",
     "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
@@ -35,7 +37,7 @@
     "@prisma/client": "~2.14",
     "blitz": "0.29.7",
     "formik": "2.2.6",
-    "minerva-ui": "7.1.3",
+    "minerva-ui": "5.1.3",
     "react": "0.0.0-experimental-3310209d0",
     "react-dom": "0.0.0-experimental-3310209d0",
     "react-error-boundary": "3.1.0",

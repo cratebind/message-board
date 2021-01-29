@@ -28,7 +28,7 @@ const PostForm = ({ initialValues, topicId, onSubmit }: PostFormProps) => {
               },
             },
           })
-          await refetch({ force: true })
+          await refetch()
         } catch (error) {
           alert("Error creating post " + JSON.stringify(error, null, 2))
         }
