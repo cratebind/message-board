@@ -45,6 +45,7 @@ export const EditTopic = () => {
                 body,
               },
             })
+            // @ts-ignore
             await setQueryData(updated)
             router.push(`/topics/${updated.id}`)
           } catch (error) {

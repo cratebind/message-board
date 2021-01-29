@@ -8,7 +8,7 @@ import createPost from "../mutations/createPost"
 type PostFormProps = {
   initialValues: any
   topicId: number
-  onSubmit: React.FormEventHandler<HTMLFormElement>
+  onSubmit?: React.FormEventHandler<HTMLFormElement>
 }
 
 const PostForm = ({ initialValues, topicId, onSubmit }: PostFormProps) => {
