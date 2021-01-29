@@ -22,7 +22,16 @@ test.skip('renders blitz documentation link', () => {
     role: 'user',
   });
 
-  const { getByText } = render(<Home />);
+  const { getByText } = render(
+    <Home
+      initialData={{
+        topics: [],
+        hasMore: false,
+        count: 0,
+        nextPage: { take: 10, skip: 0 },
+      }}
+    />
+  );
   const linkElement = getByText(/Documentation/i);
   expect(linkElement).toBeInTheDocument();
 });

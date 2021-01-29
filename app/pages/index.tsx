@@ -107,7 +107,7 @@ export const getServerSideProps = async (context) => {
 
   return {
     props: {
-      initialData,
+      initialData: initialData || undefined,
     },
   };
 };

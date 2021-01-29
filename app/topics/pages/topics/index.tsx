@@ -5,7 +5,7 @@ import getTopics from 'app/topics/queries/getTopics';
 import { Box, Button, Flex, Heading, Stack, Text } from 'minerva-ui';
 import { InitialData } from 'app/pages';
 
-export const ITEMS_PER_PAGE = 2;
+export const ITEMS_PER_PAGE = 20;
 
 export const TopicsList = ({ initialData }: { initialData?: InitialData }) => {
   const router = useRouter();
