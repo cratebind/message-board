@@ -9,8 +9,6 @@ const NewTopicPage: BlitzPage = () => {
 
   return (
     <div>
-      <h1>Create New Topic</h1>
-
       <TopicForm
         initialValues={{
           title: "",

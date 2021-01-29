@@ -69,7 +69,7 @@ export function Form<S extends z.ZodType<any, any>>({
             </div>
           )}
 
-          <Button type="submit" disabled={isSubmitting}>
+          <Button type="submit" width="100%" disabled={isSubmitting} variant="primary">
             {submitText}
           </Button>
 

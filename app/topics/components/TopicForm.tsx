@@ -1,4 +1,3 @@
-import { TopicCreateInput } from "@prisma/client"
 import Form from "app/components/Form"
 import LabeledTextField from "app/components/LabeledTextField"
 import React from "react"
@@ -31,8 +30,8 @@ const TopicForm = ({ initialValues = {}, onSubmit, onSuccess, ...props }: TopicF
       }}
       {...props}
     >
-      <LabeledTextField name="title" label="Title" />
-      <LabeledTextField name="body" label="Body" as="textarea" />
+      <LabeledTextField name="title" placeholder="Title" />
+      <LabeledTextField name="body" placeholder="Topic Content" as="textarea" />
     </Form>
   )
 }

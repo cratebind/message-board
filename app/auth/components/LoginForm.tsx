@@ -4,18 +4,25 @@ import { LabeledTextField } from "app/components/LabeledTextField"
 import { Form, FORM_ERROR } from "app/components/Form"
 import login from "app/auth/mutations/login"
 import { LoginInput } from "app/auth/validations"
+import { Box, Flex } from "minerva-ui"
 
 type LoginFormProps = {
   onSuccess?: () => void
 }
 
+export const AuthWrapper = ({ children, ...props }) => (
+  <Flex minH="60vh" width="100%" alignItems="center" justifyContent="center">
+    <Box width="100%" maxW="400px">
+      {children}
+    </Box>
+  </Flex>
+)
+
 export const LoginForm = (props: LoginFormProps) => {
   const [loginMutation] = useMutation(login)
 
   return (
-    <div>
-      <h1>Login</h1>
-
+    <AuthWrapper>
       <Form
         submitText="Login"
         schema={LoginInput}
@@ -36,14 +43,14 @@ export const LoginForm = (props: LoginFormProps) => {
           }
         }}
       >
-        <LabeledTextField name="username" label="username" placeholder="Username" />
-        <LabeledTextField name="password" label="Password" placeholder="Password" type="password" />
+        <LabeledTextField name="username" placeholder="Username" />
+        <LabeledTextField name="password" placeholder="Password" type="password" />
       </Form>
 
-      <div style={{ marginTop: "1rem" }}>
-        Or <Link href="/signup">Sign Up</Link>
+      <div style={{ marginTop: "1rem", textDecoration: "underline" }}>
+        <Link href="/signup">Sign Up</Link>
       </div>
-    </div>
+    </AuthWrapper>
   )
 }
 

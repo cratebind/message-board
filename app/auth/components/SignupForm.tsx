@@ -4,6 +4,7 @@ import { LabeledTextField } from "app/components/LabeledTextField"
 import { Form, FORM_ERROR } from "app/components/Form"
 import signup from "app/auth/mutations/signup"
 import { SignupInput } from "app/auth/validations"
+import { AuthWrapper } from "./LoginForm"
 
 type SignupFormProps = {
   onSuccess?: () => void
@@ -13,9 +14,7 @@ export const SignupForm = (props: SignupFormProps) => {
   const [signupMutation] = useMutation(signup)
 
   return (
-    <div>
-      <h1>Create an Account</h1>
-
+    <AuthWrapper>
       <Form
         submitText="Create Account"
         schema={SignupInput}
@@ -34,10 +33,10 @@ export const SignupForm = (props: SignupFormProps) => {
           }
         }}
       >
-        <LabeledTextField name="username" label="Username" placeholder="Username" />
-        <LabeledTextField name="password" label="Password" placeholder="Password" type="password" />
+        <LabeledTextField name="username" placeholder="Username" />
+        <LabeledTextField name="password" placeholder="Password" type="password" />
       </Form>
-    </div>
+    </AuthWrapper>
   )
 }
 

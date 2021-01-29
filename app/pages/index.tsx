@@ -3,7 +3,7 @@ import Layout from "app/layouts/Layout"
 import logout from "app/auth/mutations/logout"
 import { useCurrentUser } from "app/hooks/useCurrentUser"
 import { Suspense } from "react"
-import { Box, Button, Flex, Link as StyledLink, Stack } from "minerva-ui"
+import { Box, Button, Flex, Heading, Link as StyledLink, Stack } from "minerva-ui"
 import { TopicsList } from "app/topics/pages/topics"
 
 /*
@@ -19,36 +19,46 @@ export const UserInfo = () => {
     <Stack
       horizontal
       as="nav"
-      justifyContent="flex-end"
+      justifyContent="space-between"
       p={3}
       alignItems="center"
       borderBottomWidth="1px"
       mb={4}
     >
-      {Boolean(currentUser) ? (
-        <>
-          <Link href="/topics/new">
-            <Button as="a">Create Post</Button>
-          </Link>
-          <Button
-            className="button small"
-            onClick={async () => {
-              await logoutMutation()
-            }}
-          >
-            Logout
-          </Button>
-        </>
-      ) : (
-        <>
-          <Link href="/signup">
-            <a>Sign Up</a>
-          </Link>
-          <Link href="/login">
-            <a>Login</a>
-          </Link>
-        </>
-      )}
+      <Link href="/">
+        <a>
+          <Heading as="h2" fontSize="lg">
+            Message Board
+          </Heading>
+        </a>
+      </Link>
+
+      <Stack horizontal>
+        {Boolean(currentUser) ? (
+          <>
+            <Link href="/topics/new">
+              <Button as="a">Create Topic</Button>
+            </Link>
+            <Button
+              className="button small"
+              onClick={async () => {
+                await logoutMutation()
+              }}
+            >
+              Logout
+            </Button>
+          </>
+        ) : (
+          <>
+            <Link href="/signup">
+              <a>Sign Up</a>
+            </Link>
+            <Link href="/login">
+              <a>Login</a>
+            </Link>
+          </>
+        )}
+      </Stack>
     </Stack>
   )
 }

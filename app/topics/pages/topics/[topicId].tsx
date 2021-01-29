@@ -6,6 +6,7 @@ import deleteTopic from "app/topics/mutations/deleteTopic"
 import { Box, Button, Heading, Stack, Text } from "minerva-ui"
 import PostForm from "app/posts/components/PostForm"
 import { useCurrentUser } from "app/hooks/useCurrentUser"
+import ReactMarkdown from "react-markdown"
 
 export const Topic = () => {
   const currentUser = useCurrentUser()
@@ -45,9 +46,13 @@ export const Topic = () => {
 
       <Stack gap="10px">
         {topic.posts.map((post) => (
-          <Box key={post.id} paddingTop={6} marginTop={6} borderTopWidth="1px">
-            <Text>{post.user.username}</Text>
-            <Text>{post.body}</Text>
+          <Box key={post.id} paddingTop={6} paddingBottom={6} marginTop={6} borderTopWidth="1px">
+            <Text color="gray.500" fontSize="base">
+              {post.user.username}
+            </Text>
+            <div className="prose">
+              <ReactMarkdown>{post.body}</ReactMarkdown>
+            </div>
           </Box>
         ))}
       </Stack>
