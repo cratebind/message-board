@@ -3,17 +3,24 @@ import Layout from 'app/layouts/Layout';
 import { Link, usePaginatedQuery, useRouter, BlitzPage } from 'blitz';
 import getTopics from 'app/topics/queries/getTopics';
 import { Box, Button, Flex, Heading, Stack, Text } from 'minerva-ui';
+import { InitialData } from 'app/pages';
 
-const ITEMS_PER_PAGE = 100;
+export const ITEMS_PER_PAGE = 2;
 
-export const TopicsList = () => {
+export const TopicsList = ({ initialData }: { initialData?: InitialData }) => {
   const router = useRouter();
   const page = Number(router.query.page) || 0;
-  const [{ topics, hasMore }] = usePaginatedQuery(getTopics, {
-    orderBy: { updatedAt: 'desc' },
-    skip: ITEMS_PER_PAGE * page,
-    take: ITEMS_PER_PAGE,
-  });
+  const [{ topics, hasMore }] = usePaginatedQuery(
+    getTopics,
+    {
+      orderBy: { updatedAt: 'desc' },
+      skip: ITEMS_PER_PAGE * page,
+      take: ITEMS_PER_PAGE,
+    },
+    {
+      initialData,
+    }
+  );
 
   const goToPreviousPage = () => router.push({ query: { page: page - 1 } });
   const goToNextPage = () => router.push({ query: { page: page + 1 } });
@@ -21,7 +28,7 @@ export const TopicsList = () => {
   return (
     <div>
       <div>
-        {topics.map((topic) => (
+        {topics?.map((topic) => (
           <Box key={topic.id} mb={6}>
             <Link href={`/topics/${topic.id}`}>
               <a>

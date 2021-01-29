@@ -8,7 +8,7 @@ type GetTopicsInput = Pick<
 
 export default async function getTopics(
   { where, orderBy, skip = 0, take }: GetTopicsInput,
-  ctx: Ctx
+  ctx?: Ctx
 ) {
   const topics = await db.topic.findMany({
     where,

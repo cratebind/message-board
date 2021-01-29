@@ -1,10 +1,12 @@
-import { Link, BlitzPage, useMutation } from 'blitz';
+import { Link, useMutation, InferGetServerSidePropsType } from 'blitz';
 import Layout from 'app/layouts/Layout';
 import logout from 'app/auth/mutations/logout';
 import { useCurrentUser } from 'app/hooks/useCurrentUser';
 import { Suspense } from 'react';
 import { Button, Heading, Stack } from 'minerva-ui';
-import { TopicsList } from 'app/topics/pages/topics';
+import { ITEMS_PER_PAGE, TopicsList } from 'app/topics/pages/topics';
+import getTopics from 'app/topics/queries/getTopics';
+import { Post, Topic, User } from '@prisma/client';
 
 /*
  * This file is just for a pleasant getting started page for your new app.
@@ -63,12 +65,22 @@ export const UserInfo = () => {
   );
 };
 
-const Home: BlitzPage = () => {
+export type InitialData = {
+  topics: (Topic & { user: User; posts: Post[] })[];
+  nextPage: { take: number | undefined; skip: number } | null;
+  hasMore: boolean;
+  count: number;
+};
+
+const Home = ({
+  initialData,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  // console.log(topics)
   return (
     <div className="container">
       <main>
         <Suspense fallback="Loading...">
-          <TopicsList />
+          <TopicsList initialData={initialData} />
         </Suspense>
       </main>
 
@@ -83,6 +95,21 @@ const Home: BlitzPage = () => {
       </footer>
     </div>
   );
+};
+
+export const getServerSideProps = async (context) => {
+  const { page = 0 }: { page?: number } = context.query;
+  const initialData = await getTopics({
+    orderBy: { updatedAt: 'desc' },
+    skip: ITEMS_PER_PAGE * page,
+    take: ITEMS_PER_PAGE,
+  });
+
+  return {
+    props: {
+      initialData,
+    },
+  };
 };
 
 Home.getLayout = (page) => <Layout title="Home">{page}</Layout>;

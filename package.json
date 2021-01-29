@@ -31,6 +31,7 @@
   "dependencies": {
     "@prisma/cli": "~2.14",
     "@prisma/client": "~2.14",
+    "babel-plugin-superjson-next": "0.2.1",
     "blitz": "0.29.7",
     "formik": "2.2.6",
     "minerva-ui": "5.1.3",
