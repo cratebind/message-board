@@ -1,10 +1,10 @@
-import { Link, BlitzPage, useMutation } from "blitz"
-import Layout from "app/layouts/Layout"
-import logout from "app/auth/mutations/logout"
-import { useCurrentUser } from "app/hooks/useCurrentUser"
-import { Suspense } from "react"
-import { Box, Button, Flex, Heading, Link as StyledLink, Stack } from "minerva-ui"
-import { TopicsList } from "app/topics/pages/topics"
+import { Link, BlitzPage, useMutation } from "blitz";
+import Layout from "app/layouts/Layout";
+import logout from "app/auth/mutations/logout";
+import { useCurrentUser } from "app/hooks/useCurrentUser";
+import { Suspense } from "react";
+import { Button, Heading, Stack } from "minerva-ui";
+import { TopicsList } from "app/topics/pages/topics";
 
 /*
  * This file is just for a pleasant getting started page for your new app.
@@ -12,8 +12,8 @@ import { TopicsList } from "app/topics/pages/topics"
  */
 
 export const UserInfo = () => {
-  const currentUser = useCurrentUser()
-  const [logoutMutation] = useMutation(logout)
+  const currentUser = useCurrentUser();
+  const [logoutMutation] = useMutation(logout);
 
   return (
     <Stack
@@ -42,7 +42,7 @@ export const UserInfo = () => {
             <Button
               className="button small"
               onClick={async () => {
-                await logoutMutation()
+                await logoutMutation();
               }}
             >
               Logout
@@ -60,8 +60,8 @@ export const UserInfo = () => {
         )}
       </Stack>
     </Stack>
-  )
-}
+  );
+};
 
 const Home: BlitzPage = () => {
   return (
@@ -82,9 +82,9 @@ const Home: BlitzPage = () => {
         </a> */}
       </footer>
     </div>
-  )
-}
+  );
+};
 
-Home.getLayout = (page) => <Layout title="Home">{page}</Layout>
+Home.getLayout = (page) => <Layout title="Home">{page}</Layout>;
 
-export default Home
+export default Home;

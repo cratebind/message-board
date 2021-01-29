@@ -1,11 +1,14 @@
-import { Ctx } from "blitz"
-import db, { Prisma } from "db"
-import { TopicFormValues } from "../components/TopicForm"
+import { Ctx } from "blitz";
+import db from "db";
+import { TopicFormValues } from "../components/TopicForm";
 
-type CreateTopicInput = Pick<Prisma.TopicCreateArgs, "data">
+// type CreateTopicInput = Pick<Prisma.TopicCreateArgs, 'data'>
 
-export default async function createTopic({ data }: { data: TopicFormValues }, ctx: Ctx) {
-  ctx.session.authorize()
+export default async function createTopic(
+  { data }: { data: TopicFormValues },
+  ctx: Ctx
+) {
+  ctx.session.authorize();
 
   const topic = await db.topic.create({
     data: {
@@ -16,7 +19,7 @@ export default async function createTopic({ data }: { data: TopicFormValues }, c
         },
       },
     },
-  })
+  });
 
-  return topic
+  return topic;
 }

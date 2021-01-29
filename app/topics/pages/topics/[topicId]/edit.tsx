@@ -1,5 +1,5 @@
-import { Suspense } from "react"
-import Layout from "app/layouts/Layout"
+import { Suspense } from "react";
+import Layout from "app/layouts/Layout";
 import {
   Link,
   useRouter,
@@ -8,25 +8,29 @@ import {
   useParam,
   BlitzPage,
   AuthorizationError,
-} from "blitz"
-import getTopic from "app/topics/queries/getTopic"
-import updateTopic from "app/topics/mutations/updateTopic"
-import TopicForm from "app/topics/components/TopicForm"
-import { useCurrentUser } from "app/hooks/useCurrentUser"
+} from "blitz";
+import getTopic from "app/topics/queries/getTopic";
+import updateTopic from "app/topics/mutations/updateTopic";
+import TopicForm from "app/topics/components/TopicForm";
+import { useCurrentUser } from "app/hooks/useCurrentUser";
 
 export const EditTopic = () => {
-  const router = useRouter()
-  const currentUser = useCurrentUser()
-  const topicId = useParam("topicId", "number")
-  const [topic, { setQueryData }] = useQuery(getTopic, { where: { id: topicId } })
-  const [updateTopicMutation] = useMutation(updateTopic)
+  const router = useRouter();
+  const currentUser = useCurrentUser();
+  const topicId = useParam("topicId", "number");
+  const [topic, { setQueryData }] = useQuery(getTopic, {
+    where: { id: topicId },
+  });
+  const [updateTopicMutation] = useMutation(updateTopic);
 
-  if (!topic) return null
+  if (!topic) return null;
 
-  console.log({ topic })
-
-  if (Boolean(currentUser) && Boolean(topic) && currentUser?.id !== topic.userId) {
-    throw new AuthorizationError()
+  if (
+    Boolean(currentUser) &&
+    Boolean(topic) &&
+    currentUser?.id !== topic.userId
+  ) {
+    throw new AuthorizationError();
   }
 
   return (
@@ -44,18 +48,18 @@ export const EditTopic = () => {
                 title,
                 body,
               },
-            })
+            });
             // @ts-ignore
-            await setQueryData(updated)
-            router.push(`/topics/${updated.id}`)
+            await setQueryData(updated);
+            router.push(`/topics/${updated.id}`);
           } catch (error) {
-            throw new Error(error)
+            throw new Error(error);
           }
         }}
       />
     </div>
-  )
-}
+  );
+};
 
 const EditTopicPage: BlitzPage = () => {
   return (
@@ -70,9 +74,11 @@ const EditTopicPage: BlitzPage = () => {
         </Link>
       </p>
     </div>
-  )
-}
+  );
+};
 
-EditTopicPage.getLayout = (page) => <Layout title={"Edit Topic"}>{page}</Layout>
+EditTopicPage.getLayout = (page) => (
+  <Layout title={"Edit Topic"}>{page}</Layout>
+);
 
-export default EditTopicPage
+export default EditTopicPage;

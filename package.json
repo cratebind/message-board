@@ -17,10 +17,6 @@
   "prisma": {
     "schema": "db/schema.prisma"
   },
-  "prettier": {
-    "semi": false,
-    "printWidth": 100
-  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged && pretty-quick --staged",
@@ -55,6 +51,7 @@
     "@typescript-eslint/parser": "4.14.1",
     "babel-eslint": "10.1.0",
     "eslint": "7.18.0",
+    "eslint-config-cratebind": "6.0.3",
     "eslint-config-react-app": "6.0.0",
     "eslint-plugin-flowtype": "5.2.0",
     "eslint-plugin-import": "2.22.1",
@@ -66,7 +63,6 @@
     "jest-environment-jsdom-fourteen": "1.0.1",
     "jest-watch-typeahead": "0.6.1",
     "lint-staged": "10.5.3",
-    "prettier": "2.2.1",
     "pretty-quick": "3.1.0",
     "react-test-renderer": "17.0.1",
     "ts-jest": "26.4.4"
