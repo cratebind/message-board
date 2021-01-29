@@ -1,8 +1,8 @@
-import db, { Prisma } from "db";
+import db, { Prisma } from 'db';
 
 type GetPostsInput = Pick<
   Prisma.FindManyPostArgs,
-  "where" | "orderBy" | "skip" | "take"
+  'where' | 'orderBy' | 'skip' | 'take'
 >;
 
 export default async function getPosts({
@@ -22,7 +22,7 @@ export default async function getPosts({
   });
 
   const count = await db.post.count();
-  const hasMore = typeof take === "number" ? skip + take < count : false;
+  const hasMore = typeof take === 'number' ? skip + take < count : false;
   const nextPage = hasMore ? { take, skip: skip + take! } : null;
 
   return {

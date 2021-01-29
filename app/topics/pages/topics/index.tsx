@@ -1,22 +1,22 @@
-import { Suspense } from "react"
-import Layout from "app/layouts/Layout"
-import { Link, usePaginatedQuery, useRouter, BlitzPage } from "blitz"
-import getTopics from "app/topics/queries/getTopics"
-import { Box, Button, Flex, Heading, Stack, Text } from "minerva-ui"
+import { Suspense } from 'react';
+import Layout from 'app/layouts/Layout';
+import { Link, usePaginatedQuery, useRouter, BlitzPage } from 'blitz';
+import getTopics from 'app/topics/queries/getTopics';
+import { Box, Button, Flex, Heading, Stack, Text } from 'minerva-ui';
 
-const ITEMS_PER_PAGE = 100
+const ITEMS_PER_PAGE = 100;
 
 export const TopicsList = () => {
-  const router = useRouter()
-  const page = Number(router.query.page) || 0
+  const router = useRouter();
+  const page = Number(router.query.page) || 0;
   const [{ topics, hasMore }] = usePaginatedQuery(getTopics, {
-    orderBy: { updatedAt: "desc" },
+    orderBy: { updatedAt: 'desc' },
     skip: ITEMS_PER_PAGE * page,
     take: ITEMS_PER_PAGE,
-  })
+  });
 
-  const goToPreviousPage = () => router.push({ query: { page: page - 1 } })
-  const goToNextPage = () => router.push({ query: { page: page + 1 } })
+  const goToPreviousPage = () => router.push({ query: { page: page - 1 } });
+  const goToNextPage = () => router.push({ query: { page: page + 1 } });
 
   return (
     <div>
@@ -25,12 +25,23 @@ export const TopicsList = () => {
           <Box key={topic.id} mb={6}>
             <Link href={`/topics/${topic.id}`}>
               <a>
-                <Heading as="h2" color="gray.900" fontSize="lg" fontWeight="500" mb={2}>
+                <Heading
+                  as="h2"
+                  color="gray.900"
+                  fontSize="lg"
+                  fontWeight="500"
+                  mb={2}
+                >
                   {topic.title}
                 </Heading>
               </a>
             </Link>
-            <Text fontWeight={400} color="gray.600" fontSize="base" lineHeight={1}>
+            <Text
+              fontWeight={400}
+              color="gray.600"
+              fontSize="base"
+              lineHeight={1}
+            >
               {topic.body}
             </Text>
             <Flex justifyContent="space-between" mt={2} alignItems="flex-end">
@@ -59,8 +70,8 @@ export const TopicsList = () => {
         </Button>
       </Stack>
     </div>
-  )
-}
+  );
+};
 
 const TopicsPage: BlitzPage = () => {
   return (
@@ -69,9 +80,9 @@ const TopicsPage: BlitzPage = () => {
         <TopicsList />
       </Suspense>
     </div>
-  )
-}
+  );
+};
 
-TopicsPage.getLayout = (page) => <Layout title={"Topics"}>{page}</Layout>
+TopicsPage.getLayout = (page) => <Layout title={'Topics'}>{page}</Layout>;
 
-export default TopicsPage
+export default TopicsPage;

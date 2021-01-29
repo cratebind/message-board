@@ -1,7 +1,7 @@
-import { AuthorizationError, Ctx } from "blitz";
-import db, { Prisma } from "db";
+import { AuthorizationError, Ctx } from 'blitz';
+import db, { Prisma } from 'db';
 
-type UpdateTopicInput = Pick<Prisma.TopicUpdateArgs, "where" | "data">;
+type UpdateTopicInput = Pick<Prisma.TopicUpdateArgs, 'where' | 'data'>;
 
 export default async function updateTopic(
   { where, data }: UpdateTopicInput,

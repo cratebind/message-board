@@ -1,14 +1,14 @@
-import { Ctx, NotFoundError } from "blitz"
-import db, { Prisma } from "db"
+import { Ctx, NotFoundError } from 'blitz';
+import db, { Prisma } from 'db';
 
-type GetPostInput = Pick<Prisma.FindFirstPostArgs, "where">
+type GetPostInput = Pick<Prisma.FindFirstPostArgs, 'where'>;
 
 export default async function getPost({ where }: GetPostInput, ctx: Ctx) {
-  ctx.session.authorize()
+  ctx.session.authorize();
 
-  const post = await db.post.findFirst({ where })
+  const post = await db.post.findFirst({ where });
 
-  if (!post) throw new NotFoundError()
+  if (!post) throw new NotFoundError();
 
-  return post
+  return post;
 }

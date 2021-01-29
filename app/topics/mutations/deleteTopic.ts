@@ -1,12 +1,15 @@
-import { Ctx } from "blitz"
-import db, { Prisma } from "db"
+import { Ctx } from 'blitz';
+import db, { Prisma } from 'db';
 
-type DeleteTopicInput = Pick<Prisma.TopicDeleteArgs, "where">
+type DeleteTopicInput = Pick<Prisma.TopicDeleteArgs, 'where'>;
 
-export default async function deleteTopic({ where }: DeleteTopicInput, ctx: Ctx) {
-  ctx.session.authorize()
+export default async function deleteTopic(
+  { where }: DeleteTopicInput,
+  ctx: Ctx
+) {
+  ctx.session.authorize();
 
-  const topic = await db.topic.delete({ where })
+  const topic = await db.topic.delete({ where });
 
-  return topic
+  return topic;
 }

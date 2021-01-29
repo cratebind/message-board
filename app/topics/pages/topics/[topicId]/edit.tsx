@@ -1,5 +1,5 @@
-import { Suspense } from "react";
-import Layout from "app/layouts/Layout";
+import { Suspense } from 'react';
+import Layout from 'app/layouts/Layout';
 import {
   Link,
   useRouter,
@@ -8,16 +8,16 @@ import {
   useParam,
   BlitzPage,
   AuthorizationError,
-} from "blitz";
-import getTopic from "app/topics/queries/getTopic";
-import updateTopic from "app/topics/mutations/updateTopic";
-import TopicForm from "app/topics/components/TopicForm";
-import { useCurrentUser } from "app/hooks/useCurrentUser";
+} from 'blitz';
+import getTopic from 'app/topics/queries/getTopic';
+import updateTopic from 'app/topics/mutations/updateTopic';
+import TopicForm from 'app/topics/components/TopicForm';
+import { useCurrentUser } from 'app/hooks/useCurrentUser';
 
 export const EditTopic = () => {
   const router = useRouter();
   const currentUser = useCurrentUser();
-  const topicId = useParam("topicId", "number");
+  const topicId = useParam('topicId', 'number');
   const [topic, { setQueryData }] = useQuery(getTopic, {
     where: { id: topicId },
   });
@@ -78,7 +78,7 @@ const EditTopicPage: BlitzPage = () => {
 };
 
 EditTopicPage.getLayout = (page) => (
-  <Layout title={"Edit Topic"}>{page}</Layout>
+  <Layout title={'Edit Topic'}>{page}</Layout>
 );
 
 export default EditTopicPage;

@@ -1,6 +1,6 @@
-import { Ctx } from "blitz";
-import db from "db";
-import { TopicFormValues } from "../components/TopicForm";
+import { Ctx } from 'blitz';
+import db from 'db';
+import { TopicFormValues } from '../components/TopicForm';
 
 // type CreateTopicInput = Pick<Prisma.TopicCreateArgs, 'data'>
 

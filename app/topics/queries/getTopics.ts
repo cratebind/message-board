@@ -1,7 +1,10 @@
-import { Ctx } from "blitz"
-import db, { Prisma } from "db"
+import { Ctx } from 'blitz';
+import db, { Prisma } from 'db';
 
-type GetTopicsInput = Pick<Prisma.FindManyTopicArgs, "where" | "orderBy" | "skip" | "take">
+type GetTopicsInput = Pick<
+  Prisma.FindManyTopicArgs,
+  'where' | 'orderBy' | 'skip' | 'take'
+>;
 
 export default async function getTopics(
   { where, orderBy, skip = 0, take }: GetTopicsInput,
@@ -16,16 +19,16 @@ export default async function getTopics(
       user: true,
       posts: true,
     },
-  })
+  });
 
-  const count = await db.topic.count()
-  const hasMore = typeof take === "number" ? skip + take < count : false
-  const nextPage = hasMore ? { take, skip: skip + take! } : null
+  const count = await db.topic.count();
+  const hasMore = typeof take === 'number' ? skip + take < count : false;
+  const nextPage = hasMore ? { take, skip: skip + take! } : null;
 
   return {
     topics,
     nextPage,
     hasMore,
     count,
-  }
+  };
 }

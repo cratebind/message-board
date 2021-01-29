@@ -1,10 +1,10 @@
-import { Link, BlitzPage, useMutation } from "blitz";
-import Layout from "app/layouts/Layout";
-import logout from "app/auth/mutations/logout";
-import { useCurrentUser } from "app/hooks/useCurrentUser";
-import { Suspense } from "react";
-import { Button, Heading, Stack } from "minerva-ui";
-import { TopicsList } from "app/topics/pages/topics";
+import { Link, BlitzPage, useMutation } from 'blitz';
+import Layout from 'app/layouts/Layout';
+import logout from 'app/auth/mutations/logout';
+import { useCurrentUser } from 'app/hooks/useCurrentUser';
+import { Suspense } from 'react';
+import { Button, Heading, Stack } from 'minerva-ui';
+import { TopicsList } from 'app/topics/pages/topics';
 
 /*
  * This file is just for a pleasant getting started page for your new app.

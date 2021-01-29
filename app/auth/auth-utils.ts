@@ -1,5 +1,5 @@
-import { SecurePassword, AuthenticationError } from "blitz";
-import db from "db";
+import { SecurePassword, AuthenticationError } from 'blitz';
+import db from 'db';
 
 export const authenticateUser = async (username: string, password: string) => {
   const user = await db.user.findFirst({ where: { username } });

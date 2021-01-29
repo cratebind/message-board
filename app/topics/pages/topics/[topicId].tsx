@@ -1,19 +1,26 @@
-import { Suspense } from "react"
-import Layout from "app/layouts/Layout"
-import { Link, useRouter, useQuery, useParam, BlitzPage, useMutation } from "blitz"
-import getTopic from "app/topics/queries/getTopic"
-import deleteTopic from "app/topics/mutations/deleteTopic"
-import { Box, Button, Heading, Stack, Text } from "minerva-ui"
-import PostForm from "app/posts/components/PostForm"
-import { useCurrentUser } from "app/hooks/useCurrentUser"
-import ReactMarkdown from "react-markdown"
+import { Suspense } from 'react';
+import Layout from 'app/layouts/Layout';
+import {
+  Link,
+  useRouter,
+  useQuery,
+  useParam,
+  BlitzPage,
+  useMutation,
+} from 'blitz';
+import getTopic from 'app/topics/queries/getTopic';
+import deleteTopic from 'app/topics/mutations/deleteTopic';
+import { Box, Button, Heading, Stack, Text } from 'minerva-ui';
+import PostForm from 'app/posts/components/PostForm';
+import { useCurrentUser } from 'app/hooks/useCurrentUser';
+import ReactMarkdown from 'react-markdown';
 
 export const Topic = () => {
-  const currentUser = useCurrentUser()
-  const router = useRouter()
-  const topicId = useParam("topicId", "number")
-  const [topic] = useQuery(getTopic, { where: { id: topicId } })
-  const [deleteTopicMutation] = useMutation(deleteTopic)
+  const currentUser = useCurrentUser();
+  const router = useRouter();
+  const topicId = useParam('topicId', 'number');
+  const [topic] = useQuery(getTopic, { where: { id: topicId } });
+  const [deleteTopicMutation] = useMutation(deleteTopic);
 
   return (
     <div>
@@ -33,9 +40,9 @@ export const Topic = () => {
           <Button
             type="button"
             onClick={async () => {
-              if (window.confirm("This will be deleted")) {
-                await deleteTopicMutation({ where: { id: topic.id } })
-                router.push("/topics")
+              if (window.confirm('This will be deleted')) {
+                await deleteTopicMutation({ where: { id: topic.id } });
+                router.push('/topics');
               }
             }}
           >
@@ -46,7 +53,13 @@ export const Topic = () => {
 
       <Stack gap="10px">
         {topic.posts.map((post) => (
-          <Box key={post.id} paddingTop={6} paddingBottom={6} marginTop={6} borderTopWidth="1px">
+          <Box
+            key={post.id}
+            paddingTop={6}
+            paddingBottom={6}
+            marginTop={6}
+            borderTopWidth="1px"
+          >
             <Text color="gray.500" fontSize="base">
               {post.user.username}
             </Text>
@@ -65,8 +78,8 @@ export const Topic = () => {
         />
       </Box>
     </div>
-  )
-}
+  );
+};
 
 const ShowTopicPage: BlitzPage = () => {
   return (
@@ -83,9 +96,9 @@ const ShowTopicPage: BlitzPage = () => {
         <Topic />
       </Suspense>
     </div>
-  )
-}
+  );
+};
 
-ShowTopicPage.getLayout = (page) => <Layout title={"Topic"}>{page}</Layout>
+ShowTopicPage.getLayout = (page) => <Layout title={'Topic'}>{page}</Layout>;
 
-export default ShowTopicPage
+export default ShowTopicPage;

@@ -1,14 +1,21 @@
-import { Suspense } from "react"
-import Layout from "app/layouts/Layout"
-import { Link, useRouter, useQuery, useParam, BlitzPage, useMutation } from "blitz"
-import getPost from "app/posts/queries/getPost"
-import deletePost from "app/posts/mutations/deletePost"
+import { Suspense } from 'react';
+import Layout from 'app/layouts/Layout';
+import {
+  Link,
+  useRouter,
+  useQuery,
+  useParam,
+  BlitzPage,
+  useMutation,
+} from 'blitz';
+import getPost from 'app/posts/queries/getPost';
+import deletePost from 'app/posts/mutations/deletePost';
 
 export const Post = () => {
-  const router = useRouter()
-  const postId = useParam("postId", "number")
-  const [post] = useQuery(getPost, { where: { id: postId } })
-  const [deletePostMutation] = useMutation(deletePost)
+  const router = useRouter();
+  const postId = useParam('postId', 'number');
+  const [post] = useQuery(getPost, { where: { id: postId } });
+  const [deletePostMutation] = useMutation(deletePost);
 
   return (
     <div>
@@ -22,17 +29,17 @@ export const Post = () => {
       <button
         type="button"
         onClick={async () => {
-          if (window.confirm("This will be deleted")) {
-            await deletePostMutation({ where: { id: post.id } })
-            router.push("/posts")
+          if (window.confirm('This will be deleted')) {
+            await deletePostMutation({ where: { id: post.id } });
+            router.push('/posts');
           }
         }}
       >
         Delete
       </button>
     </div>
-  )
-}
+  );
+};
 
 const ShowPostPage: BlitzPage = () => {
   return (
@@ -47,9 +54,9 @@ const ShowPostPage: BlitzPage = () => {
         <Post />
       </Suspense>
     </div>
-  )
-}
+  );
+};
 
-ShowPostPage.getLayout = (page) => <Layout title={"Post"}>{page}</Layout>
+ShowPostPage.getLayout = (page) => <Layout title={'Post'}>{page}</Layout>;
 
-export default ShowPostPage
+export default ShowPostPage;

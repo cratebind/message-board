@@ -1,9 +1,9 @@
-import Form from "app/components/Form";
-import LabeledTextField from "app/components/LabeledTextField";
-import getTopic from "app/topics/queries/getTopic";
-import { useMutation, useQuery } from "blitz";
-import React from "react";
-import createPost from "../mutations/createPost";
+import Form from 'app/components/Form';
+import LabeledTextField from 'app/components/LabeledTextField';
+import getTopic from 'app/topics/queries/getTopic';
+import { useMutation, useQuery } from 'blitz';
+import React from 'react';
+import createPost from '../mutations/createPost';
 
 type PostFormProps = {
   initialValues: any;
@@ -30,7 +30,7 @@ const PostForm = ({ initialValues, topicId, onSubmit }: PostFormProps) => {
           });
           await refetch();
         } catch (error) {
-          alert("Error creating post " + JSON.stringify(error, null, 2));
+          alert('Error creating post ' + JSON.stringify(error, null, 2));
         }
       }}
     >
