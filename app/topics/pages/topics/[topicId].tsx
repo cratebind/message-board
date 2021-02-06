@@ -10,10 +10,26 @@ import {
 } from 'blitz';
 import getTopic from 'app/topics/queries/getTopic';
 import deleteTopic from 'app/topics/mutations/deleteTopic';
-import { Box, Button, Heading, Stack, Text } from 'minerva-ui';
+import { Box, Button, Flex, Heading, Stack, Text } from 'minerva-ui';
 import PostForm from 'app/posts/components/PostForm';
 import { useCurrentUser } from 'app/hooks/useCurrentUser';
 import ReactMarkdown from 'react-markdown';
+
+function hashCode(str) {
+  // java String#hashCode
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 3) - hash);
+  }
+  return hash;
+}
+
+function intToRGB(i) {
+  // eslint-disable-next-line
+  const c = (i & 0x00FFFFFF).toString(16).toUpperCase();
+
+  return '00000'.substring(0, 6 - c.length) + c;
+}
 
 export const Topic = () => {
   const currentUser = useCurrentUser();
@@ -50,24 +66,42 @@ export const Topic = () => {
           </Button>
         </Stack>
       )}
-
       <Stack gap="10px">
-        {topic.posts.map((post) => (
-          <Box
-            key={post.id}
-            paddingTop={6}
-            paddingBottom={6}
-            marginTop={6}
-            borderTopWidth="1px"
-          >
-            <Text color="gray.500" fontSize="base">
-              {post.user.username}
-            </Text>
-            <div className="prose">
-              <ReactMarkdown>{post.body}</ReactMarkdown>
-            </div>
-          </Box>
-        ))}
+        {topic.posts.map((post) => {
+          const number = hashCode(post.user.username);
+          const color = intToRGB(number);
+
+          const initial = post.user?.username?.[0];
+          return (
+            <Box
+              key={post.id}
+              paddingTop={6}
+              paddingBottom={6}
+              marginTop={6}
+              borderTopWidth="1px"
+            >
+              <Flex alignItems="center" mb={2}>
+                <Flex
+                  mr={2}
+                  height="36px"
+                  width="36px"
+                  borderRadius="full"
+                  bg={`#${color}cc`}
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  {initial.toUpperCase()}
+                </Flex>
+                <Text color="gray.500" fontSize="base">
+                  {post.user.username}
+                </Text>
+              </Flex>
+              <div className="prose">
+                <ReactMarkdown>{post.body}</ReactMarkdown>
+              </div>
+            </Box>
+          );
+        })}
       </Stack>
 
       <Box borderTopWidth="1px" marginTop={8} pt={8}>

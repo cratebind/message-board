@@ -10,12 +10,9 @@ import {
   MenuContainer,
   Stack,
   Text,
-  Image,
   MenuList,
   MenuItem,
   MenuLink,
-  MenuDivider,
-  Icon,
   Box,
 } from 'minerva-ui';
 import { ITEMS_PER_PAGE, TopicsList } from 'app/topics/pages/topics';
@@ -59,7 +56,21 @@ export const UserInfo = () => {
           <MenuButton p={2} variant="primary">
             <Text color="white">{currentUser?.username}</Text>
             <Box ml={2} color="white">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="presentation" className="sc-bdfBwQ ggQcPc"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                role="presentation"
+                className="sc-bdfBwQ ggQcPc"
+              >
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
             </Box>
           </MenuButton>
           <MenuList menuPosition="right">
